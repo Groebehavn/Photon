@@ -41,3 +41,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.o
+*.pbi
+*.cout
+project/Debug/Exe/photon.hex
+project/Debug/Obj/photon.pbd
+project/Debug/Exe/photon.sim
+project/Debug/List/photon.map
+project/Debug/Obj/photon.pbd.browse
+project/Debug/Exe/photon.out
