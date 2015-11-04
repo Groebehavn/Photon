@@ -21,10 +21,38 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-840793626
+Checksum=1296347521
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[SWOTraceHWSettings]
+OverrideDefaultClocks=0
+CpuClock=72000000
+ClockAutoDetect=0
+ClockWanted=2000000
+JtagSpeed=2000000
+Prescaler=36
+TimeStampPrescIndex=0
+TimeStampPrescData=0
+PcSampCYCTAP=1
+PcSampPOSTCNT=15
+PcSampIndex=0
+DataLogMode=0
+ITMportsEnable=0
+ITMportsTermIO=0
+ITMportsLogFile=0
+ITMlogFile=$PROJ_DIR$\ITM.log
+[array_types]
+Fmt0=U8[11]	4	0
+[watch_formats]
+Fmt0={W}0:gTriLedProcess.u8Progress	3	0
+Fmt1={W}0:tim4counter	3	0
+Fmt2={W}0:tim5counter	3	0
+Fmt3={W}0:u8LocalProgress	3	0
 [DataLog]
 LogEnabled=0
 SumEnabled=0
@@ -52,10 +80,6 @@ LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
-[CallStack]
-ShowArgs=0
-[Disassembly]
-MixedMode=1
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -68,23 +92,6 @@ EventEXC=0
 EventFOLD=0
 EventLSU=0
 EventSLEEP=0
-[SWOTraceHWSettings]
-OverrideDefaultClocks=0
-CpuClock=72000000
-ClockAutoDetect=0
-ClockWanted=2000000
-JtagSpeed=2000000
-Prescaler=36
-TimeStampPrescIndex=0
-TimeStampPrescData=0
-PcSampCYCTAP=1
-PcSampPOSTCNT=15
-PcSampIndex=0
-DataLogMode=0
-ITMportsEnable=0
-ITMportsTermIO=0
-ITMportsLogFile=0
-ITMlogFile=$PROJ_DIR$\ITM.log
 [CallStackLog]
 Enabled=0
 [DriverProfiling]

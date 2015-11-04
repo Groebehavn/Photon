@@ -23,11 +23,15 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
+#include "systypes.h"
+#include "triled.h"
+#include "trileddriver.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+extern volatile TRILED_PROCDESC gTriLedProcess;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /* Extern variables ----------------------------------------------------------*/
@@ -149,6 +153,10 @@ void TIM3_IRQHandler(void)
   */
 void TIM5_IRQHandler(void)
 {
+  if(TIM_GetITStatus(TIM5,TIM_IT_Update)==true)
+  {
+    TIM_ClearITPendingBit(TIM5,TIM_IT_Update);
+  }
 }
 
 /**
@@ -159,6 +167,32 @@ void TIM5_IRQHandler(void)
   */
 void TIM4_IRQHandler(void)
 {
+  if(TIM_GetITStatus(TIM4,TIM_IT_Update)==true)
+  {
+    TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
+    
+    if(gTriLedProcess.u8Progress == 255)
+    {
+      gTriLedProcess.u8Progress = 0;
+    }
+    
+    if(gTriLedProcess.bEnabled == true)
+    {
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_R);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_G);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_B);
+      
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_R);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_G);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_B);
+      
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_R);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_G);
+      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_B);
+    }
+    
+     gTriLedProcess.u8Progress++;
+  }
 }
 
 /**
@@ -175,6 +209,16 @@ void DMA2_Stream0_IRQHandler(void)
 {
 }
 
+/**
+  * @brief  This function handles EXT0 global interrupt request.
+  * @param  None
+  * @retval None
+  * @author PT
+  */
+void EXTI0_IRQHandler(void)
+{
+  
+}
 /**
   * @brief  This function handles PPP interrupt request.
   * @param  None
