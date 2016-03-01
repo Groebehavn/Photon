@@ -3,14 +3,14 @@
 
 #include "systypes.h"
 
-typedef enum t_TRILED_DESCRIPTOR
+typedef enum t_sTRILED_DESCRIPTOR
 {
   TRILED_LEFT = 0,
   TRILED_CENTER = 1,
   TRILED_RIGHT = 2
 }TRILED_DESCRIPTOR;
 
-typedef enum t_TRILED_COLOR
+typedef enum t_sTRILED_COLOR
 {
   TRILED_R = 0,
   TRILED_G = 1,
@@ -26,6 +26,7 @@ typedef __packed struct t_sTRILED_PROCDESC
 {
   bool bEnabled;
   bool abEnabledLeds[3];
+  bool abActiveLeds[3][3];
   TRILED_STATE aLedStates[3];
   U8 u8Progress;
 }TRILED_PROCDESC;

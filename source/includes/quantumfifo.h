@@ -3,10 +3,12 @@
 
 #include "quantum.h"
 
-#define FIFO_SIZE       3
+#define FIFO_SIZE       4096
 
 void QUANTUMFIFO_Initialize();
 void QUANTUMFIFO_Push(QUANTUM quantum);
 QUANTUM* QUANTUMFIFO_Pull();
+void QUANTUMFIFO_EmptyFifo();
+bool QUANTUMFIFO_IsOverrun();
 
 #endif

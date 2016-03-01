@@ -1965,6 +1965,9 @@
       <name>$PROJ_DIR$\..\source\gpio.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\source\program.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\source\quantum.c</name>
     </file>
     <file>

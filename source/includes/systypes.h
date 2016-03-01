@@ -4,9 +4,7 @@
 #include <stdbool.h>
 
 #define __BIT(x)        (1L<<(x))
-#define __NULL(x)       (0L<<(x))
-
-#define NULL            0        
+#define __NULL(x)       (0L<<(x))       
 
 typedef unsigned char U8;
 typedef unsigned short U16;

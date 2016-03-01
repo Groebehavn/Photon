@@ -41,10 +41,10 @@ static void TIMER_TIM4_Init(){
   //**************************************************************************//
   //Configure NVIC
   
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);               
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);               
   nvicStructure.NVIC_IRQChannel=TIM4_IRQn;                         
   nvicStructure.NVIC_IRQChannelPreemptionPriority=0;               
-  nvicStructure.NVIC_IRQChannelSubPriority=1;                      
+  nvicStructure.NVIC_IRQChannelSubPriority=0;                      
   nvicStructure.NVIC_IRQChannelCmd=ENABLE;                         
 
   NVIC_Init(&nvicStructure);
@@ -54,9 +54,9 @@ static void TIMER_TIM4_Init(){
 }
 
 /*
-Initializes TIM5 as the light-quantum change 250Hz timer
-The timer is disabled by default. Works on 250Hz, which makes up to 25x
-iterations/100ms, to be able to switch colors smoothly.
+Initializes TIM5 as the light-quantum change 20Hz timer
+The timer is disabled by default.  Up to 2x iterations/100ms,
+to be able to switch colors smoothly.
 */
 static void TIMER_TIM5_Init(){
   TIM_TimeBaseInitTypeDef initStructure;
@@ -69,7 +69,7 @@ static void TIMER_TIM5_Init(){
   initStructure.TIM_Prescaler           = 21000-1;                              //84MHz to 4kHz
   initStructure.TIM_ClockDivision       = 0;                                    //0
   initStructure.TIM_CounterMode         = TIM_CounterMode_Up;                   //Counting up
-  initStructure.TIM_Period              = 16-1;                                 //Downscaling to 250Hz
+  initStructure.TIM_Period              = (4*50)-1;                             //Downscaling to 20Hz
   initStructure.TIM_RepetitionCounter   = 0;                                    //Valid for only TIM1 and TIM8
   TIM_TimeBaseInit(TIM5,&initStructure);
     
@@ -83,10 +83,10 @@ static void TIMER_TIM5_Init(){
   //**************************************************************************//
   //Configure NVIC
   
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);
   nvicStructure.NVIC_IRQChannel=TIM5_IRQn;
-  nvicStructure.NVIC_IRQChannelPreemptionPriority=0;
-  nvicStructure.NVIC_IRQChannelSubPriority=0;
+  nvicStructure.NVIC_IRQChannelPreemptionPriority=1;
+  nvicStructure.NVIC_IRQChannelSubPriority=1;
   nvicStructure.NVIC_IRQChannelCmd=ENABLE;
 
   NVIC_Init(&nvicStructure);

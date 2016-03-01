@@ -26,6 +26,9 @@
 #include "systypes.h"
 #include "triled.h"
 #include "trileddriver.h"
+#include "quantum.h"
+#include "quantumfifo.h"
+#include "quantumserver.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -156,6 +159,23 @@ void TIM5_IRQHandler(void)
   if(TIM_GetITStatus(TIM5,TIM_IT_Update)==true)
   {
     TIM_ClearITPendingBit(TIM5,TIM_IT_Update);
+
+    QUANTUMSERVER_IncrementTickCounter();
+    if(QUANTUMSERVER_GetTickCounter()%2 == 0 && QUANTUMSERVER_GetTickCounter() != 0)
+    {
+      QUANTUMSERVER_IncrementHMilliSecondCounter();
+    }
+    
+    if(QUANTUMSERVER_GetHMilliSecondCounter()
+       >
+       ((QUANTUMSERVER_GetCurrentQuantum()).u16Properties & HOLDTIME_MASK))
+    {
+      //Because u16Properties&HOLDTIME_MASK == 0 means 0+1 * 100ms hold time
+      QUANTUMSERVER_RefreshQuantumInServer();
+      QUANTUMSERVER_SetLedStates();
+      QUANTUMSERVER_SetHMilliSecondCounterToDefault();
+      QUANTUMSERVER_SetTickCounterToDefault();
+    }
   }
 }
 
@@ -178,6 +198,7 @@ void TIM4_IRQHandler(void)
     
     if(gTriLedProcess.bEnabled == true)
     {
+      //9*12 tick long IT process in this IF branch
       TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_R);
       TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_G);
       TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_B);
