@@ -1,0 +1,168 @@
+<lightprogram>
+	<protocol name="LPP" generation="1">
+		<timeout>10</timeout>
+	</protocol>
+	<quantums>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>true</enable>
+				<time>10</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+				<led specifier="Left">
+					<R>255</R>
+					<G>255</G>
+					<B>255</B>
+				</led>
+			</leds>
+		</quantum>
+		<quantum>
+			<interpolation>
+				<enable>false</enable>
+				<time>35</time>
+			</interpolation>
+			<leds>
+				<led specifier="Right">
+					<R>200</R>
+					<G>176</G>
+					<B>31</B>
+				</led>
+				<led specifier="Center">
+					<R>150</R>
+					<G>31</G>
+					<B>47</B>
+				</led>
+				<led specifier="Left">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</led>
+			</leds>
+		</quantum>
+	</quantums>
+</lightprogram>

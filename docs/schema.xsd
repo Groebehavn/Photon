@@ -1,0 +1,74 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="lightprogram">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="protocol">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:unsignedShort" name="timeout"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="name"/>
+            <xs:attribute type="zeroExclusiveUnsignedShort" name="generation"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="quantums">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="quantum" maxOccurs="4096" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="interpolation">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:boolean" name="enable"/>
+							<xs:element name="time">
+							  <xs:simpleType>
+								<xs:restriction base="xs:unsignedShort">
+								  <xs:minInclusive value="0"/>
+								  <xs:maxInclusive value="30000"/>
+								</xs:restriction>
+							  </xs:simpleType>
+							</xs:element> 
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="leds">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="led" maxOccurs="3" minOccurs="3">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:unsignedByte" name="R"/>
+                                <xs:element type="xs:unsignedByte" name="G"/>
+                                <xs:element type="xs:unsignedByte" name="B"/>
+                              </xs:sequence>
+                              <xs:attribute type="ledType" name="specifier" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+	<xs:simpleType name="ledType">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="Right"/>
+		<xs:enumeration value="Center"/>
+		<xs:enumeration value="Left"/>
+	  </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="zeroExclusiveUnsignedShort">
+		<xs:restriction base="xs:unsignedShort">
+		  <xs:minInclusive value="1"/>
+		</xs:restriction>
+	  </xs:simpleType>
+</xs:schema>
