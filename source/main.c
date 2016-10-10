@@ -6,6 +6,7 @@
 #include "trileddriver.h"
 #include "quantumfifo.h"
 #include "quantumserver.h"
+#include "statemachine.h"
 
 void main(){
   /*
@@ -61,7 +62,7 @@ void main(){
     QUANTUMFIFO_Push(quantumbase);
   }
   
-  TIM_Cmd(TIM5,ENABLE);
+  QUANTUMSERVER_EnableModule();
   
   /*
   TRILEDDRIVER_TurnOffAll();
@@ -81,5 +82,20 @@ void main(){
   
   /* USER CODE END */
   
-  while(1);
+  while(1){
+    if(SYS_GetStartLoad())
+    {
+      STORAGE_LoadProgramCyclically();
+    }
+    
+    if(SYS_GetLoadInitialize())
+    {
+      STORAGE_InitializeNextProgram();
+    }
+    
+    if(SYS_GetRecievedData())
+    {
+      SYS_ResetRecievedData();
+    }
+  }
 }

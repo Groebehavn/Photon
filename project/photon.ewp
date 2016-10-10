@@ -1961,29 +1961,50 @@
   </group>
   <group>
     <name>source</name>
-    <file>
-      <name>$PROJ_DIR$\..\source\gpio.c</name>
-    </file>
+    <group>
+      <name>communication</name>
+    </group>
+    <group>
+      <name>program</name>
+    </group>
+    <group>
+      <name>server</name>
+      <file>
+        <name>$PROJ_DIR$\..\source\gpio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\quantum.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\quantumfifo.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\quantumserver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\timer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\triled.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\trileddriver.c</name>
+      </file>
+    </group>
+    <group>
+      <name>storage</name>
+      <file>
+        <name>$PROJ_DIR$\..\source\storage.c</name>
+      </file>
+    </group>
+    <group>
+      <name>system</name>
+      <file>
+        <name>$PROJ_DIR$\..\source\statemachine.c</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\source\program.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\quantum.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\quantumfifo.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\quantumserver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\timer.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\triled.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\source\trileddriver.c</name>
     </file>
   </group>
   <file>

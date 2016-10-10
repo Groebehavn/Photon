@@ -10,5 +10,6 @@ void QUANTUMFIFO_Push(QUANTUM quantum);
 QUANTUM* QUANTUMFIFO_Pull();
 void QUANTUMFIFO_EmptyFifo();
 bool QUANTUMFIFO_IsOverrun();
+bool QUANTUMFIFO_IsFull();
 
 #endif

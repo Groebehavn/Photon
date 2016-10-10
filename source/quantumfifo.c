@@ -71,3 +71,8 @@ bool QUANTUMFIFO_IsOverrun()
   return fifoOverrun;
 }
 
+bool QUANTUMFIFO_IsFull()
+{
+  return fifoFull;
+}
+
