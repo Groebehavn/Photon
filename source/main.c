@@ -1,12 +1,4 @@
-#include "stm32f4xx.h"
-#include "stm32f4_discovery.h"
-#include "gpio.h"
-#include "timer.h"
-#include "triled.h"
-#include "trileddriver.h"
-#include "quantumfifo.h"
-#include "quantumserver.h"
-#include "statemachine.h"
+#include "headers.h"
 
 void main(){
   /*
@@ -26,6 +18,9 @@ void main(){
   state_3.u8ColorRatios[TRILED_B] = 0;
   */
   QUANTUM quantumbase;
+  PROGRAM_HEADER pheader;
+  U32* ppheader;
+  U32* ppheader2;
   quantumbase.u16Properties = 0x0003;
   quantumbase.ledState[0].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[0].u8ColorRatios[TRILED_G] = 0;
@@ -37,6 +32,22 @@ void main(){
   quantumbase.ledState[2].u8ColorRatios[TRILED_G] = 0;
   quantumbase.ledState[2].u8ColorRatios[TRILED_B] = 0;
   
+  pheader.u16Length = 5;
+  pheader.u16Timeout = 9;
+  pheader.u8Generation = 1;
+  pheader.u8Name[0] = 0x4C;
+  pheader.u8Name[1] = 0x50; 
+  pheader.u8Name[2] = 0x50;
+  
+  U32 asd = (U32)&pheader;
+  ppheader = (U32*)asd;
+  ppheader2 = (U32*)(asd+4);
+  
+  FLASH_Unlock();
+  FLASH_ProgramWord(0x08080000l,(U32)(*ppheader));
+  FLASH_ProgramWord(0x08080004l,(U32)(*ppheader2));
+  FLASH_Lock();
+  
   
   SystemInit();
   __enable_interrupt();
@@ -47,6 +58,7 @@ void main(){
   TIMER_Initialize();
   TRILED_Initialize();
   QUANTUMSERVER_Initialize();
+  STORAGE_Initialize();
   
   for(int j=0; j<162; j++){
     quantumbase.ledState[0].u8ColorRatios[TRILED_R] = (!((j+3)%3))?255:0;
@@ -59,7 +71,8 @@ void main(){
     quantumbase.ledState[2].u8ColorRatios[TRILED_G] = 0;
     quantumbase.ledState[2].u8ColorRatios[TRILED_B] = 0;
     quantumbase.u16Properties = (j%5 + 1)*9;
-    QUANTUMFIFO_Push(quantumbase);
+    //QUANTUMFIFO_Push(quantumbase);
+    //TODO: Itt kéne beírni a flash-be a quantumot, hogy tesztelni lehessen a quantum másolást a while(1)-ben odalent!
   }
   
   QUANTUMSERVER_EnableModule();
@@ -82,7 +95,13 @@ void main(){
   
   /* USER CODE END */
   
+  //TODO: Ez nem kell ám ide!!!!
+  SYS_SetLoadInitialize();
+  
   while(1){
+    QUANTUMSERVER_Tick();
+    TRILED_Tick();
+    
     if(SYS_GetStartLoad())
     {
       STORAGE_LoadProgramCyclically();

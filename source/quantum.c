@@ -1,4 +1,4 @@
-#include "quantum.h"
+#include "headers.h"
 
 bool isInterpolated(QUANTUM* lightQuantum)
 {

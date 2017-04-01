@@ -12,6 +12,7 @@ typedef struct t_sQSERVER_STATE
 {
   bool bBufferState;
   U16 TickCounter;
+  U16 SynchronizedTickCounter;
   U16 HMilliSecondCounter;
   QUANTUM* CurrentQuantum;
 }QSERVER_STATE;
@@ -19,15 +20,9 @@ typedef struct t_sQSERVER_STATE
 void QUANTUMSERVER_DisableModule();
 void QUANTUMSERVER_EnableModule();
 void QUANTUMSERVER_Initialize();
-QUANTUM QUANTUMSERVER_GetCurrentQuantum();
-void QUANTUMSERVER_RefreshQuantumInServer();
-void QUANTUMSERVER_SetLedStates();
-U16 QUANTUMSERVER_GetTickCounter();
+QUANTUM* QUANTUMSERVER_GetCurrentQuantum();
 void QUANTUMSERVER_IncrementTickCounter();
-void QUANTUMSERVER_SetTickCounterToDefault();
-U16 QUANTUMSERVER_GetHMilliSecondCounter();
-void QUANTUMSERVER_IncrementHMilliSecondCounter();
-void QUANTUMSERVER_SetHMilliSecondCounterToDefault();
 void QUANTUMSERVER_PushProgramToFifo(U8 u8Position);
+void QUANTUMSERVER_Tick();
 
 #endif

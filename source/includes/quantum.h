@@ -1,9 +1,6 @@
 #ifndef _QUANTUM_H_
 #define _QUANTUM_H_
 
-#include "systypes.h"
-#include "triled.h"
-
 typedef __packed struct t_sQUANTUM
 {
   TRILED_STATE ledState[3];

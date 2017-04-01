@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-535119770
+Checksum=1234888662
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -49,10 +49,18 @@ ITMlogFile=$PROJ_DIR$\ITM.log
 [array_types]
 Fmt0=U8[11]	4	0
 [watch_formats]
-Fmt0={W}0:gTriLedProcess.u8Progress	3	0
-Fmt1={W}0:tim4counter	3	0
-Fmt2={W}0:tim5counter	3	0
-Fmt3={W}0:u8LocalProgress	3	0
+Fmt0={W}0:(U32)(*(ppheader+4))	4	0
+Fmt1={W}0:(U32)(*ppheader)	4	0
+Fmt2={W}0:Address	4	0
+Fmt3={W}0:Data	4	0
+Fmt4={W}0:FLASH_Sector	4	0
+Fmt5={W}0:asd	4	0
+Fmt6={W}0:gTriLedProcess.u8Progress	3	0
+Fmt7={W}0:loadStatus.u32CurrentProgramAddress	4	0
+Fmt8={W}0:tim4counter	3	0
+Fmt9={W}0:tim5counter	3	0
+Fmt10={W}0:u32Address	4	0
+Fmt11={W}0:u8LocalProgress	3	0
 [DataLog]
 LogEnabled=0
 SumEnabled=0
@@ -96,7 +104,10 @@ Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\source\main.c}.114.5" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\source\storage.c}.26.3" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\source\storage.c}.107.3" 0 0 1 "" 0 "" 0
+Count=3
 [Aliases]
 Count=0
 SuppressDialog=0

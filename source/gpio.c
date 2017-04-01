@@ -1,7 +1,4 @@
-#include "systypes.h"
-#include "stm32f4_discovery.h"
-#include "stm32f4xx_gpio.h"
-#include "gpio.h"
+#include "headers.h"
 
 const uint16_t GPIO_LEDLEFT[3]   = {
   RGBLED_LEFT_R_GPIO_PIN,

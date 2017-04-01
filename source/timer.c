@@ -1,8 +1,4 @@
-#include "systypes.h"
-#include "timer.h"
-#include "misc.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_rcc.h"
+#include "headers.h"
 
 /*
 Be aware that all the timer peripherals receive only SYSCLK/2!

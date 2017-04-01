@@ -1,7 +1,21 @@
 #ifndef _TRILEDDRIVER_H_
 #define _TRILEDDRIVER_H_
 
-void TRILEDDRIVER_TurnOffAll(void);
+typedef enum t_sTRILED_DESCRIPTOR
+{
+  TRILED_LEFT = 0,
+  TRILED_CENTER = 1,
+  TRILED_RIGHT = 2
+}TRILED_DESCRIPTOR;
+
+typedef enum t_sTRILED_COLOR
+{
+  TRILED_R = 0,
+  TRILED_G = 1,
+  TRILED_B = 2
+}TRILED_COLOR;
+
+void TRILEDDRIVER_TurnOffAll();
 void TRILEDDRIVER_TurnOn(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color);
 void TRILEDDRIVER_TurnOff(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color);
 void TRILEDDRIVER_Toggle(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color);

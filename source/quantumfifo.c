@@ -1,6 +1,4 @@
-#include "quantumfifo.h"
-#include <stdio.h>
-#include <string.h>
+#include "headers.h"
 
 static QUANTUM fifo[FIFO_SIZE];
 static U16 pushPosition;

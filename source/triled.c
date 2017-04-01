@@ -1,7 +1,4 @@
-#include "triled.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_gpio.h"
-#include "gpio.h"
+#include "headers.h"
 
 volatile TRILED_PROCDESC gTriLedProcess;
 
@@ -33,9 +30,74 @@ void TRILED_EnableModule()
 void TRILED_DisableModule()
 {
   TIM_Cmd(TIM4,DISABLE);
-  TRILEDDRIVER_TurnOffAll();
+  TRILED_TurnOffAll();
   gTriLedProcess.bEnabled = false;
   gTriLedProcess.abEnabledLeds[TRILED_LEFT] = false;
   gTriLedProcess.abEnabledLeds[TRILED_CENTER] = false;
   gTriLedProcess.abEnabledLeds[TRILED_RIGHT] = false;
+}
+
+/**
+  *     Worst case 11 ticks (+2 asserts) long takes to return from this function
+  */
+void TRILED_ProgressSpecificLedHandler(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color)
+{
+  U8 u8LocalProgress = gTriLedProcess.u8Progress;
+  if(gTriLedProcess.abEnabledLeds[descriptor])
+  {
+    if(gTriLedProcess.aLedStates[descriptor].u8ColorRatios[color]
+       >
+       u8LocalProgress)
+    {
+      TRILED_TurnOn(descriptor,color);
+    }
+    else
+    {
+      TRILED_TurnOff(descriptor,color);
+    }
+  }
+}
+
+void TRILED_TurnOffAll()
+{
+  //TODO: ez memset, 9*sizeof(bool)
+  //TODO: ez most akkor jó?
+  memset((void*)&gTriLedProcess.abActiveLeds, 0, 9*sizeof(bool));
+  TRILEDDRIVER_TurnOffAll();
+}
+
+inline void TRILED_TurnOn(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color)
+{
+  if(gTriLedProcess.abActiveLeds[descriptor][color])
+  {
+    return;
+  }
+  gTriLedProcess.abActiveLeds[descriptor][color] = true;
+  TRILEDDRIVER_TurnOn(descriptor,color);
+}
+
+inline void TRILED_TurnOff(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color)
+{
+  if(!gTriLedProcess.abActiveLeds[descriptor][color])
+  {
+    return;
+  }
+  gTriLedProcess.abActiveLeds[descriptor][color] = false;
+  TRILEDDRIVER_TurnOff(descriptor,color);
+}
+
+inline void TRILED_Toggle(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color)
+{
+  gTriLedProcess.abActiveLeds[descriptor][color] = !gTriLedProcess.abActiveLeds[descriptor][color];
+  TRILEDDRIVER_Toggle(descriptor,color);
+}
+
+void TRILED_IncrementProgress()
+{
+  gTriLedProcess.u8Progress++;
+}
+
+void TRILED_Tick()
+{
+  //TODO: migrate functions from TIM4 IT here
 }

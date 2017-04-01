@@ -22,13 +22,7 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_it.h"
-#include "systypes.h"
-#include "triled.h"
-#include "trileddriver.h"
-#include "quantum.h"
-#include "quantumfifo.h"
-#include "quantumserver.h"
+#include "headers.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -161,21 +155,6 @@ void TIM5_IRQHandler(void)
     TIM_ClearITPendingBit(TIM5,TIM_IT_Update);
 
     QUANTUMSERVER_IncrementTickCounter();
-    if(QUANTUMSERVER_GetTickCounter()%2 == 0 && QUANTUMSERVER_GetTickCounter() != 0)
-    {
-      QUANTUMSERVER_IncrementHMilliSecondCounter();
-    }
-    
-    if(QUANTUMSERVER_GetHMilliSecondCounter()
-       >
-       ((QUANTUMSERVER_GetCurrentQuantum()).u16Properties & HOLDTIME_MASK))
-    {
-      //Because u16Properties&HOLDTIME_MASK == 0 means 0+1 * 100ms hold time
-      QUANTUMSERVER_RefreshQuantumInServer();
-      QUANTUMSERVER_SetLedStates();
-      QUANTUMSERVER_SetHMilliSecondCounterToDefault();
-      QUANTUMSERVER_SetTickCounterToDefault();
-    }
   }
 }
 
@@ -199,17 +178,17 @@ void TIM4_IRQHandler(void)
     if(gTriLedProcess.bEnabled == true)
     {
       //9*12 tick long IT process in this IF branch
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_R);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_G);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_B);
+      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_R);
+      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_G);
+      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_B);
       
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_R);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_G);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_B);
+      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_R);
+      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_G);
+      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_B);
       
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_R);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_G);
-      TRILEDDRIVER_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_B);
+      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_R);
+      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_G);
+      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_B);
     }
     
      gTriLedProcess.u8Progress++;

@@ -1,8 +1,6 @@
 #ifndef _QUANTUMFIFO_H_
 #define _QUANTUMFIFO_H_
 
-#include "quantum.h"
-
 #define FIFO_SIZE       4096
 
 void QUANTUMFIFO_Initialize();

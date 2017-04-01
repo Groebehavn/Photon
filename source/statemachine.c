@@ -1,5 +1,4 @@
-#include "systypes.h"
-#include "statemachine.h"
+#include "headers.h"
 
 static volatile SYSTEMSTATE systemState;
 
