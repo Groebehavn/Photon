@@ -2007,6 +2007,21 @@
       <name>$PROJ_DIR$\..\source\program.c</name>
     </file>
   </group>
+  <group>
+    <name>test</name>
+    <group>
+      <name>server</name>
+      <file>
+        <name>$PROJ_DIR$\..\test\triled_test.c</name>
+      </file>
+    </group>
+    <group>
+      <name>storage</name>
+      <file>
+        <name>$PROJ_DIR$\..\test\storage_test.c</name>
+      </file>
+    </group>
+  </group>
   <file>
     <name>$PROJ_DIR$\..\source\main.c</name>
   </file>

@@ -4,16 +4,18 @@ static QSERVER_STATE ServerState = {
   BUFFERSTATE_INITVALUE,
   TICKCOUNTER_INITVALUE,
   TICKCOUNTER_INITVALUE,
+  TICKCOUNTER_INITVALUE,
+  TICKCOUNTER_INITVALUE,
   HMSCOUNTER_INITVALUE,
   CURRQUANTUM_INITVALUE,
 };
 
-static void QUANTUMSERVER_RefreshQuantumInServer()
+static void RefreshQuantumInServer()
 {
   ServerState.CurrentQuantum = QUANTUMFIFO_Pull();
 }
 
-static void QUANTUMSERVER_SetLedStates()
+static void SetLedStates()
 {
   if(ServerState.CurrentQuantum == NULL)
   {
@@ -26,12 +28,12 @@ static void QUANTUMSERVER_SetLedStates()
   }
 }
 
-static inline U16 QUANTUMSERVER_GetTickCounter()
+static inline U16 GetTickCounter()
 {
   return ServerState.TickCounter;
 }
 
-static inline U16 QUANTUMSERVER_GetHMilliSecondCounter()
+static inline U16 GetHMilliSecondCounter()
 {
   return ServerState.HMilliSecondCounter;
 }
@@ -41,18 +43,28 @@ static inline void SynchronizeTick()
   ServerState.SynchronizedTickCounter = ServerState.TickCounter;
 }
 
-static void QUANTUMSERVER_SetTickCountersToDefault()
+static void SetTickCountersToDefault()
 {
   ServerState.TickCounter = TICKCOUNTER_INITVALUE;
-  SynchronizeTick();
+  ServerState.SynchronizedTickCounter = TICKCOUNTER_INITVALUE;
+  ServerState.TickMargin = TICKCOUNTER_INITVALUE;
   ServerState.HMilliSecondCounter = HMSCOUNTER_INITVALUE;
+}
+
+static void SaveAndResetThreshold()
+{
+  if(ServerState.MaxMarginBetweenSync < ServerState.TickMargin)
+  {
+    ServerState.MaxMarginBetweenSync = ServerState.TickMargin;
+  }
+  ServerState.TickMargin = 0;
 }
 
 void QUANTUMSERVER_IncrementTickCounter()
 {
   ServerState.TickCounter++;
   
-  if(QUANTUMSERVER_GetTickCounter()%2 == 0 && QUANTUMSERVER_GetTickCounter() != 0)
+  if(GetTickCounter()%2 == 0 && GetTickCounter() != 0)
   {
     ServerState.HMilliSecondCounter++;
   }
@@ -74,16 +86,22 @@ void QUANTUMSERVER_Tick()
   if(ServerState.TickCounter != ServerState.SynchronizedTickCounter)
   {
     SynchronizeTick();
-    if(QUANTUMSERVER_GetHMilliSecondCounter()
+    if(GetHMilliSecondCounter()
        >
        (ServerState.CurrentQuantum->u16Properties & HOLDTIME_MASK))
     {
       //Because u16Properties&HOLDTIME_MASK == 0 means 0+1 * 100ms hold time
-      QUANTUMSERVER_RefreshQuantumInServer();
-      QUANTUMSERVER_SetLedStates();
+      RefreshQuantumInServer();
+      SetLedStates();
+      STM_EVAL_LEDToggle(LED6);
       
-      QUANTUMSERVER_SetTickCountersToDefault();
+      SetTickCountersToDefault();
     }
+    SaveAndResetThreshold();
+  }
+  else
+  {
+    ServerState.TickMargin++;
   }
 }
 
@@ -100,7 +118,7 @@ void QUANTUMSERVER_EnableModule()
 void QUANTUMSERVER_Initialize()
 {
   QUANTUMSERVER_DisableModule();
-  QUANTUMSERVER_SetTickCountersToDefault();
+  SetTickCountersToDefault();
   QUANTUMFIFO_Initialize();
 }
 

@@ -13,6 +13,9 @@ typedef struct t_sTRILED_PROCDESC
   bool abActiveLeds[3][3];
   TRILED_STATE aLedStates[3];
   U8 u8Progress;
+  U8 u8SynchronizedProgress;
+  U8 u8ProgressMargin;
+  U8 u8MaxProgressMargin;
 }TRILED_PROCDESC;
 
 void TRILED_SetLedState(TRILED_DESCRIPTOR descriptor, TRILED_STATE state);
@@ -25,7 +28,6 @@ void TRILED_IncrementProgress();
 void TRILED_Initialize(void);
 void TRILED_EnableModule(void);
 void TRILED_DisableModule(void);
-void TRILED_ProgressSpecificLedHandler(TRILED_DESCRIPTOR descriptor, TRILED_COLOR color);
 void TRILED_Tick();
 
 #endif

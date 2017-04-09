@@ -2,6 +2,12 @@
 
 void main(){
   /*
+  */
+  storage_test();
+  triled_test();
+  
+  
+  /*
   TRILED_STATE state_1;
   state_1.u8ColorRatios[TRILED_R] = 255;
   state_1.u8ColorRatios[TRILED_G] = 254;
@@ -18,9 +24,6 @@ void main(){
   state_3.u8ColorRatios[TRILED_B] = 0;
   */
   QUANTUM quantumbase;
-  PROGRAM_HEADER pheader;
-  U32* ppheader;
-  U32* ppheader2;
   quantumbase.u16Properties = 0x0003;
   quantumbase.ledState[0].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[0].u8ColorRatios[TRILED_G] = 0;
@@ -31,22 +34,6 @@ void main(){
   quantumbase.ledState[2].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[2].u8ColorRatios[TRILED_G] = 0;
   quantumbase.ledState[2].u8ColorRatios[TRILED_B] = 0;
-  
-  pheader.u16Length = 5;
-  pheader.u16Timeout = 9;
-  pheader.u8Generation = 1;
-  pheader.u8Name[0] = 0x4C;
-  pheader.u8Name[1] = 0x50; 
-  pheader.u8Name[2] = 0x50;
-  
-  U32 asd = (U32)&pheader;
-  ppheader = (U32*)asd;
-  ppheader2 = (U32*)(asd+4);
-  
-  FLASH_Unlock();
-  FLASH_ProgramWord(0x08080000l,(U32)(*ppheader));
-  FLASH_ProgramWord(0x08080004l,(U32)(*ppheader2));
-  FLASH_Lock();
   
   
   SystemInit();
@@ -102,6 +89,7 @@ void main(){
     QUANTUMSERVER_Tick();
     TRILED_Tick();
     
+    /*
     if(SYS_GetStartLoad())
     {
       STORAGE_LoadProgramCyclically();
@@ -116,5 +104,6 @@ void main(){
     {
       SYS_ResetRecievedData();
     }
+    */
   }
 }

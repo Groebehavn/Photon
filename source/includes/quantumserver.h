@@ -13,6 +13,8 @@ typedef struct t_sQSERVER_STATE
   bool bBufferState;
   U16 TickCounter;
   U16 SynchronizedTickCounter;
+  U16 TickMargin;
+  U16 MaxMarginBetweenSync;
   U16 HMilliSecondCounter;
   QUANTUM* CurrentQuantum;
 }QSERVER_STATE;

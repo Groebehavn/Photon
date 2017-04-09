@@ -2,31 +2,30 @@
 
 static LOAD_STATUS loadStatus;
 
-
-static inline bool checkName(PROGRAM_HEADER* header)
+static bool CheckName(PROGRAM_HEADER* header)
 {
   U8 u8Data[3] = {0x4C, 0x50, 0x50};    //LPP
   return (memcmp(header->u8Name,u8Data,3) == 0);
 }
 
-static bool checkGeneration(PROGRAM_HEADER* header)
+static inline bool CheckGeneration(PROGRAM_HEADER* header)
 {
   return (header->u8Generation == 1);
 }
 
-static bool checkTimeout(PROGRAM_HEADER* header)
+static inline bool CheckTimeout(PROGRAM_HEADER* header)
 {
   return (header->u16Timeout <= 3600);
 }
 
-static bool STORAGE_CheckHeader(void* address, PROGRAM_HEADER* header)
+static bool CheckHeader(void* address, PROGRAM_HEADER* header)
 {
   memcpy(header,address,sizeof(PROGRAM_HEADER));
   
-  return (checkName(header) && checkGeneration(header) && checkTimeout(header));
+  return (CheckName(header) && CheckGeneration(header) && CheckTimeout(header));
 }
 
-static U32 STORAGE_GetNextProgramAddress(U32 u32PrevAddress)
+static U32 GetNextProgramAddress(U32 u32PrevAddress)
 {
   U32 u32Address = u32PrevAddress & STORAGE_ADDR_MASK;
   u32Address = u32Address + STORAGE_ADDR_INCREMENT;
@@ -39,7 +38,7 @@ static U32 STORAGE_GetNextProgramAddress(U32 u32PrevAddress)
   return u32Address;
 }
 
-static void STORAGE_SeachNextProgram()
+static void SeachNextProgram()
 {
   U32 i = 0;
   PROGRAM_HEADER header;
@@ -47,8 +46,8 @@ static void STORAGE_SeachNextProgram()
   
   for(i=0; i<((STORAGE_END_ADDR-STORAGE_START_ADDR)/STORAGE_ADDR_INCREMENT); i++)
   {
-    u32Address = STORAGE_GetNextProgramAddress(u32Address);
-    if(STORAGE_CheckHeader((void*)u32Address, &header))
+    u32Address = GetNextProgramAddress(u32Address);
+    if(CheckHeader((void*)u32Address, &header))
     {
       loadStatus.u16QuantumsToLoad = header.u16Length;
       loadStatus.u32CurrentProgramAddress = u32Address;
@@ -80,6 +79,8 @@ void STORAGE_Initialize()
   
   loadStatus.u32CurrentProgramAddress = STORAGE_END_ADDR;
   loadStatus.u16QuantumsToLoad = 0;
+  
+  STORAGE_InitializeNextProgram();
 }
 
 void STORAGE_InitializeNextProgram()
@@ -90,13 +91,13 @@ void STORAGE_InitializeNextProgram()
   }
   else
   {
-    STORAGE_SeachNextProgram();
+    SeachNextProgram();
     //loadStatus.u16QuantumsToLoad -= STORAGE_IN_ONE_CYCLE;
     //loadStatus.u32CurrentProgramAddress += STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM);
   }
   
-  SYS_SetStartLoad();
-  SYS_ResetLoadInitialize();
+  //SYS_SetStartLoad();
+  //SYS_ResetLoadInitialize();
 }
 
 void STORAGE_LoadProgramCyclically()

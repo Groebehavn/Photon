@@ -28,7 +28,6 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern volatile TRILED_PROCDESC gTriLedProcess;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /* Extern variables ----------------------------------------------------------*/
@@ -170,28 +169,7 @@ void TIM4_IRQHandler(void)
   {
     TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
     
-    if(gTriLedProcess.u8Progress == 255)
-    {
-      gTriLedProcess.u8Progress = 0;
-    }
-    
-    if(gTriLedProcess.bEnabled == true)
-    {
-      //9*12 tick long IT process in this IF branch
-      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_R);
-      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_G);
-      TRILED_ProgressSpecificLedHandler(TRILED_LEFT,TRILED_B);
-      
-      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_R);
-      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_G);
-      TRILED_ProgressSpecificLedHandler(TRILED_CENTER,TRILED_B);
-      
-      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_R);
-      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_G);
-      TRILED_ProgressSpecificLedHandler(TRILED_RIGHT,TRILED_B);
-    }
-    
-     gTriLedProcess.u8Progress++;
+    TRILED_IncrementProgress();
   }
 }
 
