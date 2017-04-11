@@ -3,10 +3,11 @@
 
 typedef __packed struct t_sSYSTEMSTATE
 {
-  bool bRecievedData;
-  bool bLoadInitialize;
-  bool bLoadNewProgram;
+  bool bStartLoad;
+  bool bLoadFinished;
 }SYSTEMSTATE;
+
+extern SYSTEMSTATE SystemState;
 
 void SYS_SetLoadInitialize();
 void SYS_SetStartLoad();

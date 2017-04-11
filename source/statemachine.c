@@ -1,7 +1,8 @@
 #include "headers.h"
 
-static volatile SYSTEMSTATE systemState;
+SYSTEMSTATE SystemState;
 
+/*
 void SYS_SetLoadInitialize(){
   systemState.bLoadInitialize = true;
 }
@@ -37,3 +38,4 @@ bool SYS_GetStartLoad(){
 bool SYS_GetRecievedData(){
   return systemState.bRecievedData;
 }
+*/

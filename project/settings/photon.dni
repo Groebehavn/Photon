@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-738331158
+Checksum=1138382332
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -47,9 +47,12 @@ ITMportsTermIO=0
 ITMportsLogFile=0
 ITMlogFile=$PROJ_DIR$\ITM.log
 [struct_types]
-Fmt0=QSERVER_STATE-MaxMarginBetweenSync	4	0
+Fmt0=LOAD_STATUS-u32CurrentProgramAddress	4	0
+Fmt1=QSERVER_STATE-MaxMarginBetweenSync	4	0
+Fmt2=QUANTUM-u16Properties	4	0
 [array_types]
 Fmt0=U8[11]	4	0
+Fmt1=U8[3]	3	0
 [watch_formats]
 Fmt0={W}0:(U32)(*(ppheader+4))	4	0
 Fmt1={W}0:(U32)(*ppheader)	4	0
@@ -78,13 +81,6 @@ GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
 SumSortOrder=0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\source\main.c}.109.1" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\test\storage_test.c}.66.3" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\test\storage_test.c}.68.3" 0 0 1 "" 0 "" 0
-Count=3
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -92,9 +88,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -115,3 +108,10 @@ Mode=3
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
+[Aliases]
+Count=0
+SuppressDialog=0

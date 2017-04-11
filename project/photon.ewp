@@ -1994,6 +1994,9 @@
     <group>
       <name>storage</name>
       <file>
+        <name>$PROJ_DIR$\..\source\flashapi.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\source\storage.c</name>
       </file>
     </group>
@@ -2017,6 +2020,9 @@
     </group>
     <group>
       <name>storage</name>
+      <file>
+        <name>$PROJ_DIR$\..\test\flashapi_test.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\test\storage_test.c</name>
       </file>

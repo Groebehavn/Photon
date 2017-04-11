@@ -5,6 +5,7 @@ static U16 pushPosition;
 static U16 pullPosition;
 static bool fifoFull;
 static bool fifoOverrun;
+
 static inline U16 QUANTUMFIFO_IncrementPosition(U16* pos){
   if(*pos < (FIFO_SIZE-1)){
     return (*pos + 1);
@@ -54,6 +55,25 @@ QUANTUM* QUANTUMFIFO_Pull()
     pullPosition = QUANTUMFIFO_IncrementPosition(&pullPosition);
     fifoFull = false;
     return &fifo[position];
+  }
+}
+
+U32 QUANTUMFIFO_GetRemainingQuantumCount()
+{
+  if(fifoOverrun)
+  {
+    return 0;
+  }
+  else
+  {
+    if(pushPosition > pullPosition)
+    {
+      return pushPosition - pullPosition;
+    }
+    else
+    {
+      return FIFO_SIZE - (pullPosition - pushPosition);
+    }
   }
 }
 

@@ -21,8 +21,10 @@
 #include "quantum.h"
 #include "quantumfifo.h"
 #include "quantumserver.h"
+#include "progheader.h"
+#include "flashapi.h"
 #include "statemachine.h"
 #include "storage.h"
-#include "progheader.h"
+
 
 #endif

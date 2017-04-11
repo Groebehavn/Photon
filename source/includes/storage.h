@@ -11,10 +11,12 @@ typedef __packed struct t_sLOAD_STATUS
 {
   U32 u32CurrentProgramAddress;
   U16 u16QuantumsToLoad;
+  bool bLoadInProgress;
 }LOAD_STATUS;
 
 void STORAGE_Initialize();
 void STORAGE_InitializeNextProgram();
 void STORAGE_LoadProgramCyclically();
+void STORAGE_Tick();
 
 #endif

@@ -1,5 +1,15 @@
 #include "headers.h"
 
+static void storage_test_init()
+{
+  SystemInit();
+  __enable_interrupt();
+  GPIO_Initialize();
+  TIMER_Initialize();
+  TRILED_Initialize();
+  QUANTUMSERVER_Initialize();
+}
+
 void storage_test(){
   U8 u8Timer = 100;
   QUANTUM quantumbase;
@@ -11,6 +21,9 @@ void storage_test(){
   U32 u32Address;
   U32 u32Address2;
   U64 u64CopyTarget = 0;
+  
+  storage_test_init();
+  
   quantumbase.u16Properties = 0x0003;
   quantumbase.ledState[0].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[0].u8ColorRatios[TRILED_G] = 0;
@@ -41,15 +54,18 @@ void storage_test(){
   ppheader = (U64*) ((U32)&pheader) ;
   ppheader2 = (U64*) ((U32)&pheader2);
   
-  //FLASH_Unlock();
-  //FLASH_EraseSector(FLASH_Sector_5 , VoltageRange_3);
-  //FLASH_EraseSector(FLASH_Sector_6 , VoltageRange_3);
-  //FLASH_Lock();
+  /*
+  FLASH_Unlock();
+  FLASH_EraseSector(FLASH_Sector_5 , VoltageRange_3);
+  FLASH_EraseSector(FLASH_Sector_6 , VoltageRange_3);
+  FLASH_Lock();
+  */
   
   while(u8Timer-- != 0);
   
   u8P = (U8*)ppheader;
   
+  /*
   FLASH_Unlock();
   FLASH_ProgramByte(0x08040000,*u8P);
   FLASH_ProgramByte(0x08040001,*(u8P+1));
@@ -62,8 +78,16 @@ void storage_test(){
   //FLASH_ProgramDoubleWord(0x08020010,*ppheader);
   //FLASH_ProgramDoubleWord(0x08040000,*ppheader2);
   FLASH_Lock();
+  */
   
   STORAGE_Initialize();
   
-  STORAGE_LoadProgramCyclically();
+  TRILED_EnableModule();
+  QUANTUMSERVER_EnableModule();
+  
+  while(1){
+    STORAGE_Tick();
+    QUANTUMSERVER_Tick();
+    TRILED_Tick();
+  }
 }

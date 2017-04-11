@@ -50,7 +50,7 @@ static void SeachNextProgram()
     if(CheckHeader((void*)u32Address, &header))
     {
       loadStatus.u16QuantumsToLoad = header.u16Length;
-      loadStatus.u32CurrentProgramAddress = u32Address;
+      loadStatus.u32CurrentProgramAddress = u32Address + sizeof(PROGRAM_HEADER);
       break;
     }
   }
@@ -67,18 +67,10 @@ static void SeachNextProgram()
 
 void STORAGE_Initialize()
 {
-  //TODO:
-  //FLASH_SetLatency(FLASH_Latency_5);
-  //FLASH_Unlock();
-  //FLASH_ClearFlag( FLASH_FLAG_EOP |  FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-  //FLASH_EraseSector(FLASH_Sector_5 , VoltageRange_3);
-  //FLASH_ProgramWord(0x08020000l,0x5a5a5a5al);
-  //FLASH_ProgramDoubleWord(0x08020010l ,0x5A5A5A5A5A5A5A5Al);
-  //FLASH_Lock();
-  //:TODO
-  
   loadStatus.u32CurrentProgramAddress = STORAGE_END_ADDR;
   loadStatus.u16QuantumsToLoad = 0;
+  
+  SystemState.bStartLoad = true;
   
   STORAGE_InitializeNextProgram();
 }
@@ -91,13 +83,16 @@ void STORAGE_InitializeNextProgram()
   }
   else
   {
-    SeachNextProgram();
-    //loadStatus.u16QuantumsToLoad -= STORAGE_IN_ONE_CYCLE;
-    //loadStatus.u32CurrentProgramAddress += STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM);
+    if(SystemState.bStartLoad == true)
+    {
+      SeachNextProgram();
+      
+      loadStatus.bLoadInProgress = true;
+      
+      SystemState.bStartLoad = false;
+      SystemState.bLoadFinished = false;
+    }
   }
-  
-  //SYS_SetStartLoad();
-  //SYS_ResetLoadInitialize();
 }
 
 void STORAGE_LoadProgramCyclically()
@@ -105,21 +100,26 @@ void STORAGE_LoadProgramCyclically()
   U8 u8i;
   QUANTUM quantum[STORAGE_IN_ONE_CYCLE];
   
-  if(loadStatus.u16QuantumsToLoad > (STORAGE_IN_ONE_CYCLE-1))
+  if(loadStatus.u16QuantumsToLoad == 0)
   {
-    memcpy(quantum,(void*)loadStatus.u32CurrentProgramAddress,STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM));
-  
-    for(u8i = 0;u8i<STORAGE_IN_ONE_CYCLE;u8i++){
-      QUANTUMFIFO_Push(quantum[u8i]);
+    if(loadStatus.bLoadInProgress == true)
+    {
+      loadStatus.bLoadInProgress = false;
+      
+      SystemState.bLoadFinished = true;
     }
-    
-    loadStatus.u16QuantumsToLoad -= STORAGE_IN_ONE_CYCLE;
-    loadStatus.u32CurrentProgramAddress += STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM);
   }
   else{
-    if(loadStatus.u16QuantumsToLoad == 0)
+    if(loadStatus.u16QuantumsToLoad > (STORAGE_IN_ONE_CYCLE-1))
     {
-      SYS_ResetStartLoad();
+      memcpy(quantum,(void*)loadStatus.u32CurrentProgramAddress,STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM));
+
+      for(u8i = 0;u8i<STORAGE_IN_ONE_CYCLE;u8i++){
+        QUANTUMFIFO_Push(quantum[u8i]);
+      }
+      
+      loadStatus.u16QuantumsToLoad -= STORAGE_IN_ONE_CYCLE;
+      loadStatus.u32CurrentProgramAddress += STORAGE_IN_ONE_CYCLE*sizeof(QUANTUM);
     }
     else{
       memcpy(quantum,(void*)loadStatus.u32CurrentProgramAddress,loadStatus.u16QuantumsToLoad*sizeof(QUANTUM));
@@ -133,3 +133,10 @@ void STORAGE_LoadProgramCyclically()
     }
   }
 }
+
+void STORAGE_Tick()
+{
+  STORAGE_InitializeNextProgram();
+  STORAGE_LoadProgramCyclically();
+}
+  

@@ -13,6 +13,10 @@ static QSERVER_STATE ServerState = {
 static void RefreshQuantumInServer()
 {
   ServerState.CurrentQuantum = QUANTUMFIFO_Pull();
+  if( QUANTUMFIFO_GetRemainingQuantumCount() <= 2)
+  {
+    SystemState.bStartLoad = true;
+  }
 }
 
 static void SetLedStates()
@@ -67,17 +71,6 @@ void QUANTUMSERVER_IncrementTickCounter()
   if(GetTickCounter()%2 == 0 && GetTickCounter() != 0)
   {
     ServerState.HMilliSecondCounter++;
-  }
-}
-
-void QUANTUMSERVER_PushProgramToFifo(U8 u8Position)
-{
-  QUANTUM quantum;
-  U16 i=0;
-  
-  for(i=0; i<FIFO_SIZE; i++){
-    memcpy((QUANTUM*)&quantum,(QUANTUM*)PROGRAM1_BASE + (sizeof(QUANTUM) * i),sizeof(QUANTUM));
-    QUANTUMFIFO_Push(quantum);
   }
 }
 

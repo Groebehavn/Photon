@@ -9,5 +9,6 @@ QUANTUM* QUANTUMFIFO_Pull();
 void QUANTUMFIFO_EmptyFifo();
 bool QUANTUMFIFO_IsOverrun();
 bool QUANTUMFIFO_IsFull();
+U32 QUANTUMFIFO_GetRemainingQuantumCount();
 
 #endif

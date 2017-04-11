@@ -4,8 +4,23 @@
 
 extern TRILED_PROCDESC gTriLedProcess;
 
+static void triled_test_init()
+{
+  SystemInit();
+  __enable_interrupt();
+  GPIO_Initialize();
+  TIMER_Initialize();
+  TRILED_Initialize();
+  QUANTUMSERVER_Initialize();
+}
+
 void triled_test(){
   QUANTUM quantumbase;
+  
+  /*
+  triled_test_init();
+  */
+  
   quantumbase.u16Properties = 0x0003;
   quantumbase.ledState[0].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[0].u8ColorRatios[TRILED_G] = 0;
@@ -16,13 +31,6 @@ void triled_test(){
   quantumbase.ledState[2].u8ColorRatios[TRILED_R] = 0;
   quantumbase.ledState[2].u8ColorRatios[TRILED_G] = 0;
   quantumbase.ledState[2].u8ColorRatios[TRILED_B] = 0;
-  
-  SystemInit();
-  __enable_interrupt();
-  GPIO_Initialize();
-  TIMER_Initialize();
-  TRILED_Initialize();
-  QUANTUMSERVER_Initialize();
   
   for(int j=0; j<15; j++){
     quantumbase.ledState[0].u8ColorRatios[TRILED_R] = (!((j+3)%3))?255:0;
