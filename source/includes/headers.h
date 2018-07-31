@@ -19,12 +19,16 @@
 #include "trileddriver.h"
 #include "triled.h"
 #include "quantum.h"
+#include "interpolator.h"
 #include "quantumfifo.h"
 #include "quantumserver.h"
 #include "progheader.h"
 #include "flashapi.h"
 #include "statemachine.h"
 #include "storage.h"
+
+#include "tm_stm32f4_usb_vcp.h"
+#include "communication.h"
 
 
 #endif

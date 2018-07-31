@@ -38,7 +38,7 @@ static U32 GetNextProgramAddress(U32 u32PrevAddress)
   return u32Address;
 }
 
-static void SeachNextProgram()
+static void SearchNextProgram()
 {
   U32 i = 0;
   PROGRAM_HEADER header;
@@ -85,7 +85,7 @@ void STORAGE_InitializeNextProgram()
   {
     if(SystemState.bStartLoad == true)
     {
-      SeachNextProgram();
+      SearchNextProgram();
       
       loadStatus.bLoadInProgress = true;
       

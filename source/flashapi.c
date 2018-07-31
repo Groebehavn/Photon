@@ -43,12 +43,14 @@ FLASH_Status WriteQuantum(U32 u32Address, QUANTUM quantum)
 
 QUANTUM ReadQuantum(U32 u32Address)
 {
-  //TODO
-  //return 0;
+  uQUANTUM uQuantum;
+  memcpy(uQuantum.u8Data, (const void*) u32Address, sizeof(QUANTUM));
+  return uQuantum.quantum;
 }
 
 PROGRAM_HEADER ReadHeader(U32 u32Address)
 {
-  //TODO
-  //return 0;
+  uPROGRAM_HEADER uHeader;
+  memcpy(uHeader.u8Data, (const void*) u32Address, sizeof(PROGRAM_HEADER));
+  return uHeader.header;
 }

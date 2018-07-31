@@ -21,7 +21,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=1138382332
+Checksum=-997994122
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -48,8 +48,11 @@ ITMportsLogFile=0
 ITMlogFile=$PROJ_DIR$\ITM.log
 [struct_types]
 Fmt0=LOAD_STATUS-u32CurrentProgramAddress	4	0
-Fmt1=QSERVER_STATE-MaxMarginBetweenSync	4	0
-Fmt2=QUANTUM-u16Properties	4	0
+Fmt1=QUANTUM-u16Properties	4	0
+Fmt2=TRILED_PROCDESC-u8MaxProgressMargin	3	0
+Fmt3=TRILED_PROCDESC-u8Progress	3	0
+Fmt4=TRILED_PROCDESC-u8ProgressMargin	3	0
+Fmt5=TRILED_PROCDESC-u8SynchronizedProgress	3	0
 [array_types]
 Fmt0=U8[11]	4	0
 Fmt1=U8[3]	3	0
@@ -111,7 +114,8 @@ Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\source\communication.c}.32.3" 0 0 1 "" 0 "" 0
+Count=1
 [Aliases]
 Count=0
 SuppressDialog=0

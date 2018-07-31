@@ -205,7 +205,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state></state>
+          <state>Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -295,6 +295,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\source\includes</state>
+          <state>$PROJ_DIR$\..\source\vcp</state>
+          <state>$PROJ_DIR$\..\source\vcp\usb_cdc_device</state>
           <state>$PROJ_DIR$\..\source\libraries\CMSIS\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\..\source\libraries\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\source\libraries\STM32F4xx_StdPeriph_Driver\inc</state>
@@ -1963,6 +1965,48 @@
     <name>source</name>
     <group>
       <name>communication</name>
+      <group>
+        <name>VCP</name>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\tm_stm32f4_usb_vcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usb_bsp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usb_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usb_dcd.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usb_dcd_int.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_cdc_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_cdc_vcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_desc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_ioreq.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_req.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\source\vcp\usb_cdc_device\usbd_usr.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$\..\source\communication.c</name>
+      </file>
     </group>
     <group>
       <name>program</name>
@@ -1971,6 +2015,9 @@
       <name>server</name>
       <file>
         <name>$PROJ_DIR$\..\source\gpio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\source\interpolator.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\source\quantum.c</name>
@@ -2013,7 +2060,16 @@
   <group>
     <name>test</name>
     <group>
+      <name>communication</name>
+      <file>
+        <name>$PROJ_DIR$\..\test\vcp_test.c</name>
+      </file>
+    </group>
+    <group>
       <name>server</name>
+      <file>
+        <name>$PROJ_DIR$\..\test\interpolation_test.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\test\triled_test.c</name>
       </file>

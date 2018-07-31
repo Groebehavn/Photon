@@ -2,6 +2,7 @@
 
 void flashapi_test()
 {
+  bool bTestResult = true;
   QUANTUM quantumbase;
   PROGRAM_HEADER header;
   
@@ -13,6 +14,7 @@ void flashapi_test()
   FLASH_EraseSector(FLASH_Sector_9 , VoltageRange_3);
   FLASH_Lock();
   
+  //TODO: Copy down on change as well!!!
   //First program
   header.u16Length = 9;
   header.u16Timeout = 1;
@@ -93,4 +95,19 @@ void flashapi_test()
     
     WriteQuantum(0x08080008 + j*sizeof(QUANTUM),quantumbase);
   }
+  
+  memset((U8*)&header,0,sizeof(PROGRAM_HEADER));
+  memset((U8*)&quantumbase,0,sizeof(QUANTUM));
+  
+  header = ReadHeader(0x08060000);
+  quantumbase = ReadQuantum(0x08060008);
+  
+  //TODO: Copy up on change as well!!!
+  //First program
+  if( header.u16Length != 9) bTestResult = false;
+  if( header.u16Timeout != 1) bTestResult = false;
+  if( header.u8Generation != 1) bTestResult = false;
+  if( header.u8Name[0] != 0x4C) bTestResult = false;
+  if( header.u8Name[1] != 0x50) bTestResult = false; 
+  if( header.u8Name[2] != 0x50) bTestResult = false;
 }
